@@ -1,8 +1,9 @@
 package com.wat.pl;
 
 //import org.json.JSONObject;
-import net.sf.json.JSONObject;
 
+import com.mysql.jdbc.PreparedStatement;
+import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,18 +14,34 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 
 @WebServlet(name = "Servlet")
 public class Servlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    String userNameServlet= null;
+    String passwordServlet = null;
+    boolean access = false;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    public Servlet(){
+        super();
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         PrintWriter out = response.getWriter();
 
             //odczyt danych od klienta i zapis w postaci json
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String jsonString = "";
 
+
         if(br != null){
             jsonString = br.readLine();
+            System.out.println(jsonString);
         }
 
         JSONObject json = JSONObject.fromObject(jsonString);
@@ -39,7 +56,7 @@ public class Servlet extends HttpServlet {
         response.getWriter().println(json.toString() );
 
         /*komentarze w konsoli klienta *////////////////////////////////////////////
-        response.getWriter().println("Hello from servlet" );
+//        response.getWriter().println("Hello from servlet" );
 
         System.out.println("json.toString() : " + json.toString() );
     }
