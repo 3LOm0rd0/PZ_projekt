@@ -20,4 +20,15 @@
         <url-pattern>/test</url-pattern><!-- sciezka -->
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Symbol</servlet-name>
+        <servlet-class>com.wat.pl.Symbol</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Symbol</servlet-name>
+        <url-pattern>/app6a/*</url-pattern><!-- sciezka * bedzie przyjmowal parametr dodatkowy -->
+    </servlet-mapping>
+
+
 </web-app>

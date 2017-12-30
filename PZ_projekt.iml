@@ -49,5 +49,6 @@
     <orderEntry type="library" name="commons-collections-3.2.1-1.0.0" level="project" />
     <orderEntry type="library" name="ezmorph-1.0.6" level="project" />
     <orderEntry type="library" name="jakarta-poi-2.5" level="project" />
+    <orderEntry type="library" name="junit-4.7" level="project" />
   </component>
 </module>

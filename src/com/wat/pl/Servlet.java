@@ -20,45 +20,51 @@ import java.sql.ResultSet;
 public class Servlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    String userNameServlet= null;
+    String userNameServlet = null;
     String passwordServlet = null;
     boolean access = false;
     PreparedStatement stmt = null;
     ResultSet rs = null;
 
-    public Servlet(){
+    public Servlet() {
         super();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        PrintWriter out = response.getWriter();
 
-            //odczyt danych od klienta i zapis w postaci json
+        //odczyt danych od klienta i zapis w postaci json
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String jsonString = "";
 
+        String line;
+        StringBuilder jsonStringBuilder = new StringBuilder();
+        if (br != null) {
+            while ((line = br.readLine()) != null) {
 
-        if(br != null){
-            jsonString = br.readLine();
+                jsonStringBuilder.append(line);
+                jsonStringBuilder.append('\r');
+            }
+
+            jsonString = jsonStringBuilder.toString();
             System.out.println(jsonString);
         }
 
         JSONObject json = JSONObject.fromObject(jsonString);
-        String login = (String) json.get("login");
+        String login = json.getString("login");
         String password = json.getString("pass");
+        String token = User.Loggin(login, password);
 
-    //    String login = request.getParameter("login");
-   //     String password = request.getParameter("pass");
+        JSONObject jsonResponse = JSONObject.fromObject("{}");
+        jsonResponse.put("token", token);
 
-        out.println("TEST " + User.Loggin(login, password));
         //wyslanie danych do klienta jako json w stringu
-        response.getWriter().println(json.toString() );
+        response.getWriter().println(jsonResponse.toString());
 
         /*komentarze w konsoli klienta *////////////////////////////////////////////
 //        response.getWriter().println("Hello from servlet" );
 
-        System.out.println("json.toString() : " + json.toString() );
+        System.out.println("json.toString() : " + json.toString());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,6 +72,6 @@ public class Servlet extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("pass");
 
-        out.println("TEST " + User.Loggin(login, password));
+        out.println(User.Loggin(login, password));
     }
 }
