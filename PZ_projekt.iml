@@ -50,5 +50,6 @@
     <orderEntry type="library" name="ezmorph-1.0.6" level="project" />
     <orderEntry type="library" name="jakarta-poi-2.5" level="project" />
     <orderEntry type="library" name="junit-4.7" level="project" />
+    <orderEntry type="library" name="jdom-2.0.4" level="project" />
   </component>
 </module>
