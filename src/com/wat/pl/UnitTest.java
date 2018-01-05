@@ -41,7 +41,7 @@ public class UnitTest {
         boolean expected = false;
         boolean result =Symbol.isApp6aCorrect(app6a);
         Assert.assertEquals(expected, result);
-
+//
 
     }
 
