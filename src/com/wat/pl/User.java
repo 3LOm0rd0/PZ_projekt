@@ -25,25 +25,25 @@ public class User {
         return sb.toString();
     }
 
-    private String getHash(String passwordToHash, String   salt){
-        String generatedPassword = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt.getBytes("UTF-8"));
-            byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++){
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        }
-        catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
-    }
+//    private String getHash(String passwordToHash, String   salt){
+//        String generatedPassword = null;
+//        try {
+//            MessageDigest md = MessageDigest.getInstance("SHA-512");
+//            md.update(salt.getBytes("UTF-8"));
+//            byte[] bytes = md.digest(passwordToHash.getBytes("UTF-8"));
+//            StringBuilder sb = new StringBuilder();
+//            for(int i=0; i< bytes.length ;i++){
+//                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+//            }
+//            generatedPassword = sb.toString();
+//        }
+//        catch (NoSuchAlgorithmException e){
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        return generatedPassword;
+//    }
 
 
     public static String Loggin(String login, String password) {
@@ -63,12 +63,11 @@ public class User {
             int iduser = resultSet.getInt("iduser");
 
             PreparedStatement tokenStatement = MySQLAccess.getPreparedStatement("Update user set token=? where user=?");
-            prStatement.setString(1,token);
-            prStatement.setInt(2, iduser);
+            tokenStatement.setString(1,token);
+            tokenStatement.setInt(2, iduser);
 
 
-            // TODO: Return token
-            // HERE
+            //TODO: Return token
 
             return token;
 

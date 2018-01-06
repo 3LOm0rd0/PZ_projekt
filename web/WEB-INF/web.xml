@@ -27,7 +27,7 @@
 
     <servlet-mapping>
         <servlet-name>Symbol</servlet-name>
-        <url-pattern>/app6a/*</url-pattern><!-- sciezka * bedzie przyjmowal parametr dodatkowy -->
+        <url-pattern>/Symbol</url-pattern><!-- sciezka * bedzie przyjmowal parametr dodatkowy -->
     </servlet-mapping>
 
 

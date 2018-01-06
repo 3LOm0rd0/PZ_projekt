@@ -1,3 +1,6 @@
+package com.wat.pl;
+
+
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -8,41 +11,52 @@ import org.jdom2.input.sax.XMLReaders;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
 
 
-public class xmlParse {
+public class XMLParse {
 
-    public static void main(String[] args) {
+    public static String getParsed() {
+
+        String imageParsed= "";
+
+
         System.out.println(System.getProperty("user.dir"));
         try {
-            SAXBuilder saxBuilder = new SAXBuilder(XMLReaders.NONVALIDATING);
-            saxBuilder.setReuseParser(true);
+            SAXBuilder saxBuilder = new SAXBuilder();
             SAXEngine saxengine = saxBuilder.buildEngine();
 
-            File inputFileMobility = new File(System.getProperty("user.dir")+"\\App6aIcons\\mobility\\-F--------MO---.svg");
-            Document document = saxengine.build(inputFileMobility);
+            File inputFileMobility = new File(System.getProperty("user.dir")+"\\App6aIcons\\mobility\\-"+Symbol.affiliation+"--------M"+Symbol.mobility+"---.svg");
+            Document document = saxBuilder.build(inputFileMobility);
             System.out.println("Root element :" + document.getRootElement().getName());
             Element classElementMobility = document.getRootElement();
             List<Content> elementMobility = classElementMobility.cloneContent();
 
-            File inputFileRanks = new File(System.getProperty("user.dir")+"\\App6aIcons\\ranks\\-F--------EB---.svg");
-            Document documentRanks = saxengine.build(inputFileRanks);
+            File inputFileRanks = new File(System.getProperty("user.dir")+"\\App6aIcons\\ranks\\-"+Symbol.affiliation+"--------E"+Symbol.rank+"---.svg");
+            Document documentRanks = saxBuilder.build(inputFileRanks);
             System.out.println("Root element :" + documentRanks.getRootElement().getName());
             Element classElementRanks = documentRanks.getRootElement();
-             List<Content> elementRanks = classElementRanks.cloneContent();
+            List<Content> elementRanks = classElementRanks.cloneContent();
 
-            File inputFileTypes = new File(System.getProperty("user.dir")+"\\App6aIcons\\types\\sfapmhcm-------.svg");
-            Document documentTypes = saxengine.build(inputFileTypes);
+            File inputFileTypes = new File(System.getProperty("user.dir")+"\\App6aIcons\\types\\"+Symbol.type+".svg");
+            Document documentTypes = saxBuilder.build(inputFileTypes);
             System.out.println("Root element :" + documentTypes.getRootElement().getName());
             Element classElementTypes = documentTypes.getRootElement();
             List<Content> elementTypes = classElementTypes.cloneContent();
 
 
             Element full=new Element("svg");
+            full.setAttribute("width","400px");
+            full.setAttribute("height","400px");
+            full.setAttribute("viewBox","0 0 400 400");
+
             Element ele[]=new Element[3];
             for(int i=0;i<3;i++)
                 ele[i]=new Element("g");
@@ -70,7 +84,14 @@ public class xmlParse {
 
             XMLOutputter xmlOutput = new XMLOutputter();
             Document documentFull=new Document (full);
-            xmlOutput.output(documentFull, System.out);
+
+
+
+            imageParsed= new XMLOutputter().outputString(documentFull);
+
+
+            System.out.println(imageParsed);
+
 
             xmlOutput.setFormat(Format.getPrettyFormat());
             xmlOutput.output(documentFull, new FileWriter(
@@ -83,5 +104,6 @@ public class xmlParse {
         } catch(IOException ioe) {
             ioe.printStackTrace();
         }
+        return imageParsed;
     }
 }
